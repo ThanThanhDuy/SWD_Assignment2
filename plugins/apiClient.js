@@ -6,7 +6,7 @@ export default (context, inject) => {
 const api = {
   getData() {
     return fetch('/api/getdata', {
-      method: 'post',
+      method: 'GET',
       headers: {
         'Content-Type': 'application/json'
       }
