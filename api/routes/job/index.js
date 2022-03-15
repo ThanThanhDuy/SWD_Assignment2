@@ -9,6 +9,10 @@ router.get(
   '/v1/job/estimateTimeToGetJobFromTopCV',
   jobHandlerTopCV.estimateTimeToCrawl
 )
+router.get(
+  '/v1/job/estimateTimeToGetJobFromTimviec365',
+  jobHandlerTimviec365.estimateTimeToCrawl
+)
 router.post(
   '/v1/job/getJobFromTimviec365',
   jobHandlerTimviec365.getJobFromTimviec365

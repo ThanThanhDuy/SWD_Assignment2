@@ -214,7 +214,7 @@
         <button
           class="w-full bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-6"
           type="button"
-          @click="getJobFromTopCV"
+          @click="getJobFromTimviec365"
         >
           Get Job From TimViec365
         </button>
@@ -357,6 +357,47 @@ export default {
             const res = await this.$axios.post('/api/v1/job/getJobFromTopCV', {
               keyword: item.keyword
             })
+            console.info(`Done crawl ${item.keyword} in ${res.data.time}`)
+            item.status = 'Done'
+          } else {
+            console.warn(resTime.data.message)
+            item.status = 'Error'
+          }
+        }
+      } else {
+        alert('Please enter keyword')
+      }
+    },
+    async getJobFromTimviec365() {
+      let checkEmptyKeyWord = this.listKeyWord2.findIndex(
+        item => item.keyword === ''
+      )
+      if (checkEmptyKeyWord === -1) {
+        for (const item of this.listKeyWord2) {
+          item.status = 'Start'
+          console.info(` Estimate ${item.keyword}`)
+          setTimeout(() => {
+            item.status = 'Running'
+          }, 1000)
+          const resTime = await this.$axios.get(
+            '/api/v1/job/estimateTimeToGetJobFromTimviec365',
+            {
+              params: {
+                keyword: item.keyword
+              }
+            }
+          )
+          if (resTime.data.success) {
+            console.info(
+              `estimate crawl ${item.keyword} in ${resTime.data.time} minutes`
+            )
+            console.info(`Start crawl ${item.keyword}`)
+            const res = await this.$axios.post(
+              '/api/v1/job/getJobFromTimviec365',
+              {
+                keyword: item.keyword
+              }
+            )
             console.info(`Done crawl ${item.keyword} in ${res.data.time}`)
             item.status = 'Done'
           } else {

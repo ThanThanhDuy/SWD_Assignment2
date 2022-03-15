@@ -2,8 +2,11 @@ const express = require('express')
 const routes = require('../api/routes/routes')
 const table = require('../database/createTable')
 const app = express()
+const cors = require('cors')
 
 app.use(express.json())
+
+app.use(cors({ origin: true, credentials: true }))
 
 // create table
 table.createTable()
