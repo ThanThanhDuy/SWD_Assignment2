@@ -1,36 +1,39 @@
-const topCV_Crawler = require('../handler/topCV/index')
-const browserObject = require('../browser/index')
-export default async function (req, res, next) {
-  console.log(req.url)
-  if (req.url.trim() === '/getdata') {
-    res.setHeader('content-type', 'application/json')
-    let browser = await browserObject.startBrowser()
-    try {
-      const result = await topCV_Crawler.getJobFromTopCV(browser, [
-        'lập trình viên c/c++'
-      ])
-      console.log('close browser')
-      setTimeout(() => {
-        browser.close()
-      }, 3000)
-      return res.end(
-        JSON.stringify({
-          success: true,
-          data: result
-        })
-      )
-    } catch (error) {
-      console.log('close browser')
-      console.log(error)
-      browser.close()
-      res.end(
-        JSON.stringify({
-          success: false,
-          message: error
-        })
-      )
-    }
-    return
-  }
-  next()
+const express = require('express')
+const routes = require('../api/routes/routes')
+const table = require('../database/createTable')
+const app = express()
+const cors = require('cors')
+
+app.use(express.json())
+
+app.use(cors({ origin: true, credentials: true }))
+
+// create table
+table.createTable()
+
+// Routes
+app.use(routes)
+
+//catch errors
+app.use((req, res, next) => {
+  const err = new Error('Not Found')
+  err.status = 404
+  next(err)
+})
+
+//error handler
+app.use((err, req, res, next) => {
+  const error = app.get('env') === 'development' ? err : {}
+  res.status(err.status || 500)
+  res.message = err.message
+  return res.json({
+    status: error.status,
+    message: error.message
+  })
+})
+
+// Export the server middleware
+module.exports = {
+  path: '/api',
+  handler: app
 }

@@ -1,15 +1,15 @@
 // const database = require('../../../configs/connectDB')
 const consola = require('consola')
 const browserObject = require('../../browser/index')
-const topCVCrawler = require('../../crawler/topCV/index')
-const topCVCrawlerCountPage = require('../../crawler/topCV/countPageOfKeyword')
-const topCVCrawlerPerPage = require('../../crawler/topCV/crawlPerKeyword')
+// const topCVCrawler = require('../../crawler/topCV/index')
+const timviec365CrawlerCountPage = require('../../crawler/timviec365/countPagePerKeyWord')
+const timviec365CrawlerPerPage = require('../../crawler/timviec365/crawlPerKeyWord')
 const insertIntoDatabase = require('../../database/topCV/topCV_DB')
-const getJobFromTopCV = async (req, res) => {
+const getJobFromTimviec365 = async (req, res) => {
   let browser = await browserObject.startBrowser()
   try {
     let keyword = req.body.keyword
-    let result = await topCVCrawlerPerPage.scraper(browser, keyword)
+    let result = await timviec365CrawlerPerPage.scraper(browser, keyword)
     // let result = await topCVCrawler.scraper(browser, listKeyword)
     await insertIntoDatabase(result.data)
     consola.success({
@@ -25,7 +25,7 @@ const getJobFromTopCV = async (req, res) => {
     }, 3000)
     return res.status(200).json({
       success: true,
-      message: 'Get job from topcv successfully',
+      message: 'Get job from timviec365 successfully',
       time: result.time
     })
   } catch (error) {
@@ -50,11 +50,23 @@ const estimateTimeToCrawl = async (req, res) => {
   let browser = await browserObject.startBrowser()
   try {
     let keyword = req.query.keyword
-    let { maxPage, canCrawl } = await topCVCrawlerCountPage.scraper(
+    let { maxPage, canCrawl } = await timviec365CrawlerCountPage.scraper(
       browser,
       keyword
     )
-    if (canCrawl) {
+    if (!canCrawl && maxPage === 0) {
+      consola.info({
+        message: `don't have any job in ${keyword}`,
+        badge: true
+      })
+      setTimeout(() => {
+        browser.close()
+      }, 3000)
+      return res.status(200).json({
+        success: false,
+        message: `don't have any job in ${keyword}`
+      })
+    } else {
       let time = parseInt(3) + parseInt(maxPage)
       consola.info({
         message: `estimate time to crawl ${keyword} successfully in ${time} minutes`,
@@ -67,18 +79,6 @@ const estimateTimeToCrawl = async (req, res) => {
         success: true,
         message: `estimate time to crawl ${keyword} successfully in ${time} minutes`,
         time: time
-      })
-    } else {
-      consola.info({
-        message: `don't have any job in ${keyword}`,
-        badge: true
-      })
-      setTimeout(() => {
-        browser.close()
-      }, 3000)
-      return res.status(200).json({
-        success: false,
-        message: `don't have any job in ${keyword}`
       })
     }
   } catch (error) {
@@ -100,6 +100,6 @@ const estimateTimeToCrawl = async (req, res) => {
 }
 
 module.exports = {
-  getJobFromTopCV,
+  getJobFromTimviec365,
   estimateTimeToCrawl
 }

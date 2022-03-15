@@ -1,4 +1,7 @@
-export default {
+require('dotenv').config()
+
+module.exports = {
+  telemetry: false,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'swd_ass2',
@@ -11,13 +14,13 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
   // server
-  serverMiddleware: [{ path: '/api', handler: '~/api/index.js' }],
+  serverMiddleware: ['~/api/index.js'],
 
   // Global CSS: https://go.nuxtjs.dev/config-css
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/apiClient.js'],
+  // plugins: ['~/plugins/apiClient.js'],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -39,7 +42,7 @@ export default {
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/'
+    baseURL: process.env.BASE_URL || 'http://localhost:3000'
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

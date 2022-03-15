@@ -4,9 +4,16 @@ const scraperObject = {
   url: urlTopCV.BASE_URL_TOPCV,
   async scraper(browser, keyword) {
     const timeStart = new Date()
-    console.log('Start crawl TopCV at: ', timeStart)
+    consola.log({
+      message: `Start crawl TopCV at: ${timeStart}`,
+      badge: true
+    })
     let page = await browser.newPage()
     console.log(`Navigating to ${this.url}`)
+    consola.log({
+      message: `Navigating to ${this.url}`,
+      badge: true
+    })
     // chuyen den trang chu
     await page.goto(urlTopCV.BASE_URL_TOPCV, { waitUntil: 'networkidle2' })
     // chuyen den trang viec lam
@@ -219,6 +226,8 @@ const getJobDetail = async (page, link) => {
     tenCongViec,
     tenCongTy,
     mucLuong,
+    mucLuongMin: '',
+    mucLuongMax: '',
     hinhThucLamViec,
     gioiTinh,
     capBac,
