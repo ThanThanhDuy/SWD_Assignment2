@@ -238,22 +238,22 @@ const getJobDetail = async (page, link, keyword) => {
     }
   }
   return new Job({
-    idCongViec,
-    tenCongViec,
-    tenCongTy,
-    mucLuong,
-    mucLuongMin: '',
-    mucLuongMax: '',
-    hinhThucLamViec,
-    gioiTinh,
-    capBac,
-    kinhNghiem,
-    diaDiemLamViec: diaDiemLamViecArr[1],
-    urlImgCompany: '',
-    addressCompany: '',
-    nganhNghe: career.join('; '),
+    id_job: idCongViec,
+    name_job: tenCongViec,
+    name_company: tenCongTy,
+    salary: mucLuong,
+    salary_min: '',
+    salary_max: '',
+    working_methods: hinhThucLamViec,
+    gender: gioiTinh,
+    level: capBac,
+    experience: kinhNghiem,
+    address_working: diaDiemLamViecArr[1],
+    url_img_company: '',
+    address_company: '',
+    career: career.join('; '),
     web: 'topcv.vn',
-    keywordSearch: keyword
+    keyword_search: keyword
   })
   // return {
   //   idCongViec,

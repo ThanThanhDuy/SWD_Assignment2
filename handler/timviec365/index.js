@@ -4,7 +4,7 @@ const browserObject = require('../../browser/index')
 // const topCVCrawler = require('../../crawler/topCV/index')
 const timviec365CrawlerCountPage = require('../../crawler/timviec365/countPagePerKeyWord')
 const timviec365CrawlerPerPage = require('../../crawler/timviec365/crawlPerKeyWord')
-const insertIntoDatabase = require('../../database/topCV/topCV_DB')
+const insertIntoDatabase = require('../../database/job/insertDB')
 const getJobFromTimviec365 = async (req, res) => {
   let browser = await browserObject.startBrowser()
   try {

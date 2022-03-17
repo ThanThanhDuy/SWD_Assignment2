@@ -4,7 +4,7 @@ const browserObject = require('../../browser/index')
 const topCVCrawler = require('../../crawler/topCV/index')
 const topCVCrawlerCountPage = require('../../crawler/topCV/countPageOfKeyword')
 const topCVCrawlerPerPage = require('../../crawler/topCV/crawlPerKeyword')
-const insertIntoDatabase = require('../../database/topCV/topCV_DB')
+const insertIntoDatabase = require('../../database/job/insertDB')
 const getJobFromTopCV = async (req, res) => {
   let browser = await browserObject.startBrowser()
   try {

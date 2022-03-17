@@ -18,16 +18,22 @@ const scraperObject = {
     await page.waitForSelector('.box_m_search input#fts_id')
     await (await page.$('.box_m_search input#fts_id')).type(keyword)
     await page.keyboard.press('Enter')
-    // wait for dom loaded
+    // wait for web loaded
     await page.waitForNavigation({
       waitUntil: 'networkidle2'
     })
-    let countPage = 1
-    let endPage = true
-    let maxPage = 0
-    const urlCurrent = await page.url()
-    let canCrawl = true
 
+    let maxPage = 0
+    let canCrawl = true
+    /**
+     * step 1: kiem tra xem cos button de den last page hay k
+     * - yes: chuyen den last page va lay count page hien tai(last page)
+     * - No: kiem co btn next hay k
+     *    > yes: next den khi k con btn page nua -> get last page
+     *    > No: kiem tra co last page hay k
+     *        > yes: get last page
+     *        > No: return key word not have data -> don't need crawl
+     */
     let checkHaveLastPage = (await page.$('.last')) || null
     if (checkHaveLastPage) {
       await page.waitForSelector('.last')
@@ -50,43 +56,6 @@ const scraperObject = {
         canCrawl = false
       }
     }
-    // while (endPage) {
-    //   // check keyword have data
-    //   let checkDataPage = (await page.$('.main_cate .item_cate')) || null
-    //   if (checkDataPage) {
-    //     // go back page
-    //     const urlToBack = await page.url()
-    //     await page.goto(urlToBack, {
-    //       waitUntil: 'networkidle2'
-    //     })
-    //     // check end page
-    //     let element = (await page.$('.clr .next')) || null
-    //     endPage = element ? true : false
-    //     // console.log(page.url())
-    //     // console.log(countPage)
-    //     maxPage++
-    //   } else {
-    //     endPage = false
-    //     if (countPage === 1) {
-    //       canCrawl = false
-    //     }
-    //   }
-    //   if (endPage) {
-    //     if (urlCurrent.includes('keyword')) {
-    //       await page.goto(
-    //         urlViecLam365.BASE_URL_SEARCH + `${keyword}&page=${countPage + 1}`,
-    //         {
-    //           waitUntil: 'networkidle2'
-    //         }
-    //       )
-    //     } else {
-    //       await page.goto(urlCurrent + `?page=${countPage + 1}`, {
-    //         waitUntil: 'networkidle2'
-    //       })
-    //     }
-    //     countPage++
-    //   }
-    // }
     console.log({ maxPage, canCrawl })
     return { maxPage, canCrawl }
   }
