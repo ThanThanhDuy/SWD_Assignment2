@@ -16,7 +16,6 @@ const scraperObject = {
     })
     // chuyen den trang chu
     await page.goto(urlViecLam365.BASE_URL, { waitUntil: 'networkidle2' })
-    // const listSearch = keyword.LIST_SEARCH_TIMVEIC365
 
     // chuyen den trang viec lam
     consola.log({
@@ -212,39 +211,23 @@ const getJobDetail = async (page, link, keyword) => {
   } else {
     throw `Check Selector .box_tomtat_2 p in URL: ${page.url()}`
   }
-
-  // return {
-  //   idCongViec,
-  //   tenCongViec,
-  //   tenCongTy,
-  //   mucLuong,
-  //   hinhThucLamViec: listItem[0],
-  //   gioiTinh: listItem[1],
-  //   capBac: listItem[2],
-  //   kinhNghiem: listItem[3],
-  //   diaDiemLamViec,
-  //   urlImgCompany: '',
-  //   addressCompany: '',
-  //   nganhNghe: listItem[4],
-  //   web: 'timviec365.vn'
-  // }
   return new Job({
-    idCongViec,
-    tenCongViec,
-    tenCongTy,
-    mucLuong,
-    mucLuongMin: '',
-    mucLuongMax: '',
-    hinhThucLamViec: listItem[0],
-    gioiTinh: listItem[1],
-    capBac: listItem[2],
-    kinhNghiem: listItem[3],
-    diaDiemLamViec,
-    urlImgCompany: '',
-    addressCompany: '',
-    nganhNghe: listItem[4],
+    id_job: idCongViec,
+    name_job: tenCongViec,
+    name_company: tenCongTy,
+    salary: mucLuong,
+    salary_min: '',
+    salary_max: '',
+    working_methods: listItem[0],
+    gender: listItem[1],
+    level: listItem[2],
+    experience: listItem[3],
+    address_working: diaDiemLamViec,
+    url_img_company: '',
+    address_company: '',
+    career: listItem[4],
     web: 'timviec365.vn',
-    keywordSearch: keyword
+    keyword_search: keyword
   })
 }
 

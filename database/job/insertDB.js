@@ -1,4 +1,4 @@
-const database = require('../../database/index')
+const database = require('../index')
 
 const Job = require('../../model/job')
 

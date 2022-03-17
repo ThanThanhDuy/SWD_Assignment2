@@ -5,60 +5,60 @@ class Job extends Model {}
 
 Job.init(
   {
-    idCongViec: {
+    id_job: {
       type: DataTypes.STRING,
       primaryKey: true,
       allowNull: false
     },
-    tenCongViec: {
+    name_job: {
       type: DataTypes.STRING(1000),
       allowNull: false
     },
-    tenCongTy: {
+    name_company: {
       type: DataTypes.STRING(500),
       allowNull: false
     },
-    mucLuong: {
+    salary: {
       type: DataTypes.STRING(400),
       allowNull: false
     },
-    mucLuongMin: {
+    salary_min: {
       type: DataTypes.STRING(400),
       allowNull: false
     },
-    mucLuongMax: {
+    salary_max: {
       type: DataTypes.STRING(400),
       allowNull: false
     },
-    hinhThucLamViec: {
+    working_methods: {
       type: DataTypes.STRING(400),
       allowNull: false
     },
-    gioiTinh: {
+    gender: {
       type: DataTypes.STRING(400),
       allowNull: false
     },
-    capBac: {
+    level: {
       type: DataTypes.STRING(200),
       allowNull: false
     },
-    kinhNghiem: {
+    experience: {
       type: DataTypes.STRING(200),
       allowNull: false
     },
-    diaDiemLamViec: {
+    address_working: {
       type: DataTypes.STRING(6000),
       allowNull: false
     },
-    urlImgCompany: {
+    url_img_company: {
       type: DataTypes.STRING(1000),
       allowNull: false
     },
-    addressCompany: {
+    address_company: {
       type: DataTypes.STRING(1000),
       allowNull: false
     },
-    nganhNghe: {
+    career: {
       type: DataTypes.STRING(1000),
       allowNull: false
     },
@@ -66,7 +66,7 @@ Job.init(
       type: DataTypes.STRING,
       allowNull: false
     },
-    keywordSearch: {
+    keyword_search: {
       type: DataTypes.STRING,
       allowNull: false
     }
