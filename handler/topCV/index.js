@@ -13,16 +13,16 @@ const getJobFromTopCV = async (req, res) => {
     // let result = await topCVCrawler.scraper(browser, listKeyword)
     await insertIntoDatabase(result.data)
     consola.success({
-      message: 'Insert into DB successfully',
+      message: 'Topcv: Insert into DB successfully',
       badge: true
     })
     consola.success({
-      message: 'close browser',
+      message: 'Topcv: close browser',
       badge: true
     })
-    setTimeout(() => {
-      browser.close()
-    }, 3000)
+
+    browser.close()
+
     return res.status(200).json({
       success: true,
       message: 'Get job from topcv successfully',
@@ -30,11 +30,11 @@ const getJobFromTopCV = async (req, res) => {
     })
   } catch (error) {
     consola.error({
-      message: error,
+      message: `Topcv: ${error}`,
       badge: true
     })
     consola.error({
-      message: 'close browser',
+      message: 'Topcv: close browser',
       badge: true
     })
     browser.close()
@@ -57,12 +57,12 @@ const estimateTimeToCrawl = async (req, res) => {
     if (canCrawl) {
       let time = parseInt(3) + parseInt(maxPage)
       consola.info({
-        message: `estimate time to crawl ${keyword} successfully in ${time} minutes`,
+        message: `Topcv: estimate time to crawl ${keyword} successfully in ${time} minutes`,
         badge: true
       })
-      setTimeout(() => {
-        browser.close()
-      }, 3000)
+
+      browser.close()
+
       return res.status(200).json({
         success: true,
         message: `estimate time to crawl ${keyword} successfully in ${time} minutes`,
@@ -70,12 +70,12 @@ const estimateTimeToCrawl = async (req, res) => {
       })
     } else {
       consola.info({
-        message: `don't have any job in ${keyword}`,
+        message: `Topcv: don't have any job in ${keyword}`,
         badge: true
       })
-      setTimeout(() => {
-        browser.close()
-      }, 3000)
+
+      browser.close()
+
       return res.status(200).json({
         success: false,
         message: `don't have any job in ${keyword}`
@@ -83,11 +83,11 @@ const estimateTimeToCrawl = async (req, res) => {
     }
   } catch (error) {
     consola.error({
-      message: error,
+      message: `Topcv: ${error}`,
       badge: true
     })
     consola.error({
-      message: 'close browser',
+      message: 'Topcv: close browser',
       badge: true
     })
     browser.close()

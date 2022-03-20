@@ -4,6 +4,7 @@ async function startBrowser() {
   let browser
   try {
     browser = await puppeteer.launch({
+      // set headless to false to see browser
       headless: true,
       args: ['--disable-setuid-sandbox', '--window-size=1920,1080'],
       ignoreHTTPSErrors: true,

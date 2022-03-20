@@ -4,7 +4,7 @@ const scraperObject = {
   async scraper(browser, keyword) {
     let page = await browser.newPage()
     consola.log({
-      message: `Estimate ${keyword}`,
+      message: `Timviec365: Estimate ${keyword}`,
       badge: true
     })
     // chuyen den trang chu
@@ -38,6 +38,9 @@ const scraperObject = {
     if (checkHaveLastPage) {
       await page.waitForSelector('.last')
       await (await page.$('.last')).click({ clickCount: 1 })
+      await page.waitForNavigation({
+        waitUntil: 'networkidle2'
+      })
       const element = await page.waitForSelector('.jp-current')
       maxPage = await element.evaluate(el => el.textContent)
     } else {
@@ -45,6 +48,9 @@ const scraperObject = {
       while (checkHaveNextPage) {
         await page.waitForSelector('.next')
         await (await page.$('.next')).click({ clickCount: 1 })
+        await page.waitForNavigation({
+          waitUntil: 'networkidle2'
+        })
         checkHaveNextPage = (await page.$('.next')) || null
       }
       let checkHavePageCurrent = (await page.$('.jp-current')) || null
@@ -56,7 +62,7 @@ const scraperObject = {
         canCrawl = false
       }
     }
-    console.log({ maxPage, canCrawl })
+    // console.log({ maxPage, canCrawl })
     return { maxPage, canCrawl }
   }
 }

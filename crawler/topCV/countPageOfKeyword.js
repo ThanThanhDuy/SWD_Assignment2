@@ -4,7 +4,7 @@ const scraperObject = {
   async scraper(browser, keyword) {
     let page = await browser.newPage()
     consola.log({
-      message: `Estimate ${keyword}`,
+      message: `Topcv: Estimate ${keyword}`,
       badge: true
     })
     // console.log(`Navigating to ${this.url}`)

@@ -6,12 +6,12 @@ const scraperObject = {
   async scraper(browser, keyword) {
     const timeStart = new Date()
     consola.log({
-      message: `Start crawl timviec365 at: ${timeStart}`,
+      message: `Timviec365: Start crawl timviec365 at: ${timeStart}`,
       badge: true
     })
     let page = await browser.newPage()
     consola.log({
-      message: `Navigating to ${this.url}`,
+      message: `Timviec365: Navigating to ${this.url}`,
       badge: true
     })
     // chuyen den trang chu
@@ -19,7 +19,7 @@ const scraperObject = {
 
     // chuyen den trang viec lam
     consola.log({
-      message: `Navigating to ${urlViecLam365.BASE_URL_SEARCH}`,
+      message: `Timviec365: Navigating to ${urlViecLam365.BASE_URL_SEARCH}`,
       badge: true
     })
     await page.goto(urlViecLam365.BASE_URL_SEARCH, {
@@ -38,9 +38,10 @@ const scraperObject = {
     let endPage = true
     const urlCurrent = await page.url()
     while (endPage) {
+      const timeStartPage = new Date()
       // get job basic info
       consola.ready({
-        message: `crawl page ${countPage} of ${keyword}`,
+        message: `Timviec365: crawl page ${countPage} of ${keyword}`,
         badge: true
       })
       // check keyword have data
@@ -70,7 +71,7 @@ const scraperObject = {
       } else {
         endPage = false
         consola.warn({
-          message: `page ${countPage} of ${keyword} don't have data`,
+          message: `Timviec365: page ${countPage} of ${keyword} don't have data`,
           badge: true
         })
       }
@@ -89,10 +90,17 @@ const scraperObject = {
         }
         countPage++
       }
+      const timeEndPage = new Date()
+      consola.info({
+        message: `Timviec365: End Crawl Page ${
+          countPage - 1
+        } in ${calculateTime(timeStartPage, timeEndPage)}`,
+        badge: true
+      })
     }
-    await page.waitForSelector('.box_m_search input#fts_id')
-    await (await page.$('.box_m_search input#fts_id')).click({ clickCount: 3 })
-    await page.keyboard.press('Delete')
+    // await page.waitForSelector('.box_m_search input#fts_id')
+    // await (await page.$('.box_m_search input#fts_id')).click({ clickCount: 3 })
+    // await page.keyboard.press('Delete')
 
     /**
      * End crawl timviec365
@@ -100,14 +108,13 @@ const scraperObject = {
     const timeEnd = new Date()
     // console.log(listResult)
     consola.log({
-      message: `End crawl timviec365 at: : ${timeEnd}`,
+      message: `Timviec365: End crawl timviec365 at: : ${timeEnd}`,
       badge: true
     })
     consola.log({
-      message: `crawled ${listResult.length} jobs in ${calculateTime(
-        timeStart,
-        timeEnd
-      )}`,
+      message: `Timviec365: crawled ${
+        listResult.length
+      } jobs in ${calculateTime(timeStart, timeEnd)}`,
       badge: true
     })
     return {
