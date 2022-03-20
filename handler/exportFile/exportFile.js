@@ -7,7 +7,7 @@ const exportFilePDF = async (req, res) => {
     let listCondition = req.body.listCondition
     let data = await selectJob(listAttr, listCondition)
     consola.success({
-      message: 'Get job from DB successfully',
+      message: 'Export PDF: Get job from DB successfully',
       badge: true
     })
     return res.status(200).json({
@@ -17,7 +17,7 @@ const exportFilePDF = async (req, res) => {
     })
   } catch (error) {
     consola.error({
-      message: error,
+      message: `Export PDF: ${error}`,
       badge: true
     })
     res.status(500).json({

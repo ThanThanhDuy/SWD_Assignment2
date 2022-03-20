@@ -6,19 +6,19 @@ const scraperObject = {
   async scraper(browser, keyword) {
     const timeStart = new Date()
     consola.log({
-      message: `Start crawl TopCV at: ${timeStart}`,
+      message: `Topcv: Start crawl TopCV at: ${timeStart}`,
       badge: true
     })
     let page = await browser.newPage()
     consola.log({
-      message: `Navigating to ${this.url}`,
+      message: `Topcv: Navigating to ${this.url}`,
       badge: true
     })
     // chuyen den trang chu
     await page.goto(urlTopCV.BASE_URL_TOPCV, { waitUntil: 'networkidle2' })
     // chuyen den trang viec lam
     consola.log({
-      message: `Navigating to ${urlTopCV.URL_VIEC_LAM_TOPCV}`,
+      message: `Topcv: Navigating to ${urlTopCV.URL_VIEC_LAM_TOPCV}`,
       badge: true
     })
     await page.goto(urlTopCV.URL_VIEC_LAM_TOPCV, {
@@ -50,7 +50,7 @@ const scraperObject = {
     do {
       const timeStartPage = new Date()
       consola.info({
-        message: `crawl page ${countpage} of ${maxPage} of ${keyword}`,
+        message: `Topcv: crawl page ${countpage} of ${maxPage} of ${keyword}`,
         badge: true
       })
       let checkDataPage =
@@ -59,7 +59,7 @@ const scraperObject = {
         )) || null
       if (checkDataPage) {
         consola.warn({
-          message: `page ${countpage} of ${maxPage} of ${keyword} don't have data`,
+          message: `Topcv: page ${countpage} of ${maxPage} of ${keyword} don't have data`,
           badge: true
         })
         break
@@ -95,7 +95,7 @@ const scraperObject = {
       }
       const timeEndPage = new Date()
       consola.info({
-        message: `End Crawl Page ${countpage - 1} in ${calculateTime(
+        message: `Topcv: End Crawl Page ${countpage - 1} in ${calculateTime(
           timeStartPage,
           timeEndPage
         )}`,
@@ -117,11 +117,11 @@ const scraperObject = {
     }
     const timeEnd = new Date()
     consola.log({
-      message: `End crawl TopCV at: ${timeEnd}`,
+      message: `Topcv: End crawl TopCV at: ${timeEnd}`,
       badge: true
     })
     consola.log({
-      message: `crawled ${listResult.length} jobs in ${calculateTime(
+      message: `Topcv: crawled ${listResult.length} jobs in ${calculateTime(
         timeStart,
         timeEnd
       )}`,

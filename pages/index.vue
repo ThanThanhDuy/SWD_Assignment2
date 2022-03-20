@@ -9,6 +9,7 @@
             class="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
             @click="addKeyword"
+            :disabled="disabledTopcvWhenCrawl"
           >
             Add Keyword
           </button>
@@ -70,6 +71,7 @@
                 class="w-2/12 bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 @click="deleteKeyword(item.id)"
+                :disabled="item.isDelete"
               >
                 Delete
               </button>
@@ -105,6 +107,7 @@
           class="w-full bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-6"
           type="button"
           @click="getJobFromTopCV"
+          :disabled="disabledTopcvWhenCrawl"
         >
           Get Job From TopCV
         </button>
@@ -119,6 +122,7 @@
             class="bg-green-400 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="button"
             @click="addKeyword2"
+            :disabled="disabledTimviec365WhenCrawl"
           >
             Add Keyword
           </button>
@@ -180,6 +184,7 @@
                 class="w-2/12 bg-red-400 hover:bg-red-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 type="button"
                 @click="deleteKeyword2(item.id)"
+                :disabled="item.isDelete"
               >
                 Delete
               </button>
@@ -215,6 +220,7 @@
           class="w-full bg-blue-400 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline mt-6"
           type="button"
           @click="getJobFromTimviec365"
+          :disabled="disabledTimviec365WhenCrawl"
         >
           Get Job From TimViec365
         </button>
@@ -233,76 +239,92 @@ export default {
         {
           id: 1,
           keyword: 'lập trình viên net',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 2,
           keyword: 'lập trình viên c/c++',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 3,
           keyword: 'lập trình viên java',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 4,
           keyword: 'lập trình viên javaScript',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 5,
           keyword: 'lập trình viên android',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 6,
           keyword: 'lập trình viên nodejs',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 7,
           keyword: 'lập trình viên angularjs',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 8,
           keyword: 'lập trình viên reactjs',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         }
       ],
       listKeyWord2: [
         {
           id: 1,
           keyword: 'java',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 2,
           keyword: 'react',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 3,
           keyword: 'angular',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 4,
           keyword: 'nodejs',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 5,
           keyword: 'zxc',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         },
         {
           id: 6,
           keyword: 'android',
-          status: 'Not Start'
+          status: 'Not Start',
+          isDelete: false
         }
-      ]
+      ],
+      disabledTopcvWhenCrawl: false,
+      disabledTimviec365WhenCrawl: false
     }
   },
   methods: {
@@ -331,6 +353,8 @@ export default {
       this.listKeyWord2 = this.listKeyWord2.filter(item => item.id !== id)
     },
     async getJobFromTopCV() {
+      this.disabledTopcvWhenCrawl = true
+      this.listKeyWord.forEach(item => (item.isDelete = true))
       let checkEmptyKeyWord = this.listKeyWord.findIndex(
         item => item.keyword === ''
       )
@@ -367,8 +391,12 @@ export default {
       } else {
         alert('Please enter keyword')
       }
+      this.listKeyWord.forEach(item => (item.isDelete = false))
+      this.disabledTopcvWhenCrawl = false
     },
     async getJobFromTimviec365() {
+      this.disabledTimviec365WhenCrawl = true
+      this.listKeyWord2.forEach(item => (item.isDelete = true))
       let checkEmptyKeyWord = this.listKeyWord2.findIndex(
         item => item.keyword === ''
       )
@@ -408,6 +436,8 @@ export default {
       } else {
         alert('Please enter keyword')
       }
+      this.listKeyWord2.forEach(item => (item.isDelete = false))
+      this.disabledTimviec365WhenCrawl = false
     }
   }
 }

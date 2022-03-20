@@ -16,7 +16,7 @@
             class="form-check-label inline-block text-gray-800"
             for="flexCheckDefault"
           >
-            TopCV
+            topcv.vn
           </label>
         </div>
         <!-- timviec365 -->
@@ -31,7 +31,7 @@
             class="form-check-label inline-block text-gray-800"
             for="flexCheckDefault"
           >
-            TimViec365
+            timViec365.vn
           </label>
         </div>
       </div>
@@ -186,7 +186,7 @@ const breakLineText = require('../util/breakLineText')
 export default {
   data() {
     return {
-      fileName: `Report TopCV`,
+      fileName: ``,
       time: `${new Date().toLocaleDateString()}`,
       marginTop: 6,
       countLine: 1,
@@ -206,7 +206,8 @@ export default {
         'level',
         'experience',
         'working_methods',
-        'salary'
+        'salary',
+        'web'
       ],
       listCondition: [{ web: 'topcv.vn' }]
     }
@@ -230,10 +231,10 @@ export default {
         case 'isSelectedTimviec365':
           {
             if (this.isSelectedTimviec365) {
-              this.listCondition.push({ web: 'timviec365.com' })
+              this.listCondition.push({ web: 'timviec365.vn' })
             } else {
               const index = this.listCondition.findIndex(
-                item => item.web === 'timviec365.com'
+                item => item.web === 'timviec365.vn'
               )
               this.listCondition.splice(index, 1)
             }
@@ -316,7 +317,7 @@ export default {
           'gender',
           'address_working'
         ]
-        this.listCondition = [{ web: 'topcv.vn' }, { web: 'timviec365.com' }]
+        this.listCondition = [{ web: 'topcv.vn' }, { web: 'timviec365.vn' }]
         console.log(this.listAttr)
         console.log(this.listCondition)
       } else {
@@ -335,6 +336,25 @@ export default {
       }
     },
     async exportPdf(isPreview) {
+      if (this.listCondition && this.listCondition.length === 0) {
+        alert('Please select Web to export')
+        return
+      }
+      if (this.listAttr && this.listAttr.length === 0) {
+        alert('Please select Attribute to export')
+        return
+      }
+      if (this.listCondition.length > 0) {
+        if (this.listCondition.length === 1) {
+          if (this.listCondition[0].web === 'topcv.vn') {
+            this.fileName = 'Report TopCV'
+          } else {
+            this.fileName = 'Report Timviec365'
+          }
+        } else {
+          this.fileName = 'Report TopCV & Timviec365'
+        }
+      }
       const res = await this.$axios.post('/api/v1/job/getJobFromDBToPDF', {
         listAttr: this.listAttr,
         listCondition: this.listCondition
@@ -544,6 +564,14 @@ export default {
             )
           }
         }
+        // web
+
+        if (countLine % 47 === 0) {
+          doc.addPage('a4')
+          countLine = this.countLine
+        }
+        this.writeLine(doc, `Web:`, 10, 'left', ++countLine)
+        this.writeLine(doc, `${item.web}`, marginLeftLine, 'left', countLine)
       }
 
       if (isPreview) {
